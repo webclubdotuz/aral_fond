@@ -598,6 +598,25 @@ class TelegramController extends Controller
                 exit;
             }
 
+            if($personal->is_active && $callback_data == 'cancel')
+            {
+                $job = Job::where('personal_id', $personal->id)->where('status', 'passive')->first();
+
+                // delete file
+                Storage::disk('public')->delete($job->file_path);
+                // delete job
+                $job->delete();
+
+                $telegram->editMessageText([
+                    'chat_id' => $chat_id,
+                    'message_id' => $request->input('callback_query.message.message_id'),
+                    'text' => "Бийкарлаў қабылланды ✅",
+                    'reply_markup' => json_encode([
+                        'inline_keyboard' => []
+                    ])
+                ]);
+            }
+
             if($personal->is_active && $text == "Анкета"){
                 $anketa = "";
                 $anketa .= "👤 Ф.А.Ә: " . $personal->fullname . "\n";
