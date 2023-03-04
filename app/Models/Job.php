@@ -16,4 +16,9 @@ class Job extends Model
         'status',
         'type',
     ];
+
+    public function personal()
+    {
+        return $this->belongsTo(Personal::class);
+    }
 }

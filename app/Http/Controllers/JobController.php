@@ -10,4 +10,12 @@ class JobController extends Controller
     {
         return view('pages.jobs.index');
     }
+    public function text()
+    {
+        return view('pages.jobs.texts');
+    }
+    public function photo()
+    {
+        return view('pages.jobs.photos');
+    }
 }

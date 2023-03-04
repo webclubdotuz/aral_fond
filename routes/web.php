@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
         Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
+        Route::get('/jobs-text', [JobController::class, 'text'])->name('jobs.text');
+        Route::get('/jobs-photo', [JobController::class, 'photo'])->name('jobs.photo');
     });
 
 

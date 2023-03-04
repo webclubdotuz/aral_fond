@@ -3,10 +3,19 @@
     // dd($job);
     $file_extension = pathinfo($job->file_path, PATHINFO_EXTENSION);
     ?>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-        data-bs-target="#fullscreeexampleModal{{ $job->id }}">
-        Fullscreen Modal
-    </button>
+
+    @if ($file_extension == 'pdf')
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+            data-bs-target="#fullscreeexampleModal{{ $job->id }}">
+            <i class="uil-file-alt"></i>
+        </button>
+    @else
+        <button type="button" class="btn btn-primary p-0" data-bs-toggle="modal"
+            data-bs-target="#fullscreeexampleModal{{ $job->id }}">
+            <img src="{{ asset('storage/' . $job->file_path) }}" alt="" height="34px" class="p-0">
+        </button>
+    @endif
+
     <div class="modal fade" id="fullscreeexampleModal{{ $job->id }}" tabindex="-1"
         aria-labelledby="fullscreeexampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">

@@ -59,12 +59,27 @@
                     <span> Катнасыушылар </span>
                 </a>
             </li>
+
             <li class="side-nav-item">
-                <a href="{{ route('jobs.index') }}" class="side-nav-link">
+                <a data-bs-toggle="collapse" href="#jobs" aria-expanded="false" aria-controls="jobs" class="side-nav-link">
                     <i class="uil-lightbulb-alt"></i>
                     <span> Жумыслар </span>
+                    <span class="menu-arrow"></span>
                 </a>
+                <div class="collapse" id="jobs">
+                    <ul class="side-nav-second-level">
+                        <li class="side-nav-item">
+                            <li>
+                                <a href="{{ route('jobs.text') }}">Шығармалар</a>
+                            </li>
+                            <li>
+                                <a href="{{ route('jobs.photo') }}">Суўретлер</a>
+                            </li>
+                        </li>
+                    </ul>
+                </div>
             </li>
+
 
             <x-admin-menu />
         </ul>
