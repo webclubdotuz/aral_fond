@@ -18,7 +18,7 @@ class JobPhotoTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Job::query()->where('type', 'photo');
+        return Job::query()->where('type', 'photo')->where('status', 'active')->orderBy('id', 'desc');
     }
 
     public function columns(): array
