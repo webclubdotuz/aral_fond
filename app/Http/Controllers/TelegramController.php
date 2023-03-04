@@ -527,7 +527,7 @@ class TelegramController extends Controller
 
                 $jobs_txt = "Файлыңыз қабылланды ✅\n\n";
                 $jobs_txt .= "👤 Ф.А.Ә: " . $personal->fullname . "\n";
-                $jobs_txt .= "📍 Мәнзили: " . $personal->address . "\n";
+                $jobs_txt .= "📍 Мәнзили: " . $personal->rayon . "\n";
                 $jobs_txt .= "📞 Телефон: " . $personal->phone . "\n";
                 $jobs_txt .= "✉️ Таңлаў түри: ";
                 // $jobs_txt .= $job->type == 'text' ? 'Шығарма' : 'Суўрет' . "\n\n";
