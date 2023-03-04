@@ -54,9 +54,15 @@
             </li>
 
             <li class="side-nav-item">
-                <a href="{{ route('customers.index') }}" class="side-nav-link">
+                <a href="{{ route('personals.index') }}" class="side-nav-link">
                     <i class="uil-users-alt"></i>
                     <span> Катнасыушылар </span>
+                </a>
+            </li>
+            <li class="side-nav-item">
+                <a href="{{ route('jobs.index') }}" class="side-nav-link">
+                    <i class="uil-lightbulb-alt"></i>
+                    <span> Жумыслар </span>
                 </a>
             </li>
 

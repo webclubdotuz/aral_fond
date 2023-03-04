@@ -3,8 +3,10 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PersonalController;
 use Illuminate\Support\Facades\Route;
 
 // Login
@@ -22,6 +24,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'role:admin'], function () {
         Route::resource('users', \App\Http\Controllers\UserController::class);
         Route::resource('roles', \App\Http\Controllers\RoleController::class);
+
+        Route::get('/personals', [PersonalController::class, 'index'])->name('personals.index');
+
+
+        Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
     });
 
 

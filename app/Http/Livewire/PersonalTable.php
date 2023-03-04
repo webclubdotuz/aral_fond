@@ -4,16 +4,16 @@ namespace App\Http\Livewire;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Customer;
+use App\Models\Personal;
 
-class CustomerTable extends DataTableComponent
+class PersonalTable extends DataTableComponent
 {
-    protected $model = Customer::class;
+    protected $model = Personal::class;
 
     public function configure(): void
     {
         $this->setPrimaryKey('id')->setTableRowUrl(function ($client) {
-            return route('customers.show', $client);
+            // return route('personals.show', $client);
         })->setTableAttributes([
             'class' => 'table-bordered table-hover',
         ]);
@@ -32,11 +32,7 @@ class CustomerTable extends DataTableComponent
                 ->searchable(),
             Column::make("Д.рождения", "birthday")
                 ->sortable(),
-            Column::make("Адрес", "address")
-                ->sortable(),
-            Column::make("Источник", "source")
-                ->sortable(),
-            Column::make("Комментарий", "comment")
+            Column::make("Адрес", "Rayon")
                 ->sortable(),
         ];
     }
