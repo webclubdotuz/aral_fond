@@ -404,7 +404,7 @@ class TelegramController extends Controller
 
                 $telegram->sendMessage([
                     'chat_id' => $chat_id,
-                    'text' => '✅ Сиздиң анкетаңыз қабылданды',
+                    'text' => '✅ Сиздиң анкетаңыз қабылланды',
                 ]);
 
                 $telegram->sendMessage([
@@ -460,7 +460,13 @@ class TelegramController extends Controller
                     'chat_id' => $chat_id,
                     'text' => 'Суўретиңизди PDF яки 1 дана суўрет форматында ботқа жибериң',
                     'reply_markup' => json_encode([
-                        'keyboard' => $main_menu,
+                        'keyboard' => [
+                            [
+                                [
+                                    'text' => '🔙 Бас меню'
+                                ]
+                            ]
+                        ],
                         'resize_keyboard' => true,
                     ])
                 ]);
