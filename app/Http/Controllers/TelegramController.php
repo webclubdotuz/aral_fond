@@ -460,13 +460,7 @@ class TelegramController extends Controller
                     'chat_id' => $chat_id,
                     'text' => 'Суўретиңизди PDF яки 1 дана суўрет форматында ботқа жибериң',
                     'reply_markup' => json_encode([
-                        'keyboard' => [
-                            [
-                                [
-                                    'text' => '🔙 Бас меню'
-                                ]
-                            ]
-                        ],
+                        'keyboard' => $main_menu,
                         'resize_keyboard' => true,
                     ])
                 ]);
@@ -478,7 +472,7 @@ class TelegramController extends Controller
 
                 $jobs = Job::create([
                     'personal_id' => $personal->id,
-                    'job' => 'photo',
+                    'type' => 'photo',
                     'status' => 'passive'
                 ]);
 
@@ -486,7 +480,7 @@ class TelegramController extends Controller
             }
 
             // get document or photo
-            if($personal->is_active && $personal->map == 'photo')
+            if($personal->is_active && $personal->map == 'photo' || $personal->map == 'text')
             {
 
                 if($request->input('message.document.file_id')){
@@ -513,47 +507,116 @@ class TelegramController extends Controller
 
                 $file_name = $request->input('message.document.file_name') ?? $request->input('message.photo.0.file_unique_id') . '.jpg';
 
-                $file = $telegram->getFile([
-                    'file_id' => $file_id
-                ]);
+                $response = $telegram->getFile(['file_id' => $file_id]);
 
-                $file_path = $file->getFilePath();
-
-                $file_url = "https://api.telegram.org/file/bot{$token}/{$file_path}";
-
-                $file = file_get_contents($file_url);
-
-                $path_file = Storage::disk('public')->put( time() . $file_name, $file);
-
+                $file = "https://api.telegram.org/file/bot" . env('TELEGRAM_BOT_TOKEN') . "/" . $response->getFilePath();
+                $contents = file_get_contents($file);
+                $path_url = "jobs/" . $file_name;
+                $path_file = Storage::disk('public')->put($path_url, $contents);
 
 
                 $job = Job::where('personal_id', $personal->id)->where('status', 'passive')->first();
-                $job->file_path = $path_file;
+                $job->file_path = $path_url;
                 $job->save();
+
+                $jobs_txt = "Файлыңыз қабылланды ✅\n\n";
+                $jobs_txt .= "👤 Ф.А.Ә: " . $personal->fullname . "\n";
+                $jobs_txt .= "📍 Мәнзили: " . $personal->address . "\n";
+                $jobs_txt .= "📞 Телефон: " . $personal->phone . "\n";
+                $jobs_txt .= "✉️ Таңлаў түри: ";
+                // $jobs_txt .= $job->type == 'text' ? 'Шығарма' : 'Суўрет' . "\n\n";
+                if($job->type == 'text'){
+                    $jobs_txt .= 'Шығарма' . "\n\n";
+                }else{
+                    $jobs_txt .= 'Суўрет' . "\n\n";
+                }
+
+                $jobs_txt .= "Танлаўда қатнасыў ушын тастыйықлаў кнопкасын басың";
 
                 $telegram->sendMessage([
                     'chat_id' => $chat_id,
-                    'text' => 'Суўретиңиз қабылданды',
+                    'text' => $jobs_txt,
                     'reply_markup' => json_encode([
-                        'keyboard' => [
+                        'inline_keyboard' => [
                             [
                                 [
-                                    'text' => '🔙 Бас меню'
+                                    'text' => '✅ Тастыйықлаў',
+                                    'callback_data' => 'confirm'
+                                ],
+                                [
+                                    'text' => '❌ Бийкарлаў',
+                                    'callback_data' => 'cancel'
                                 ]
                             ]
-                        ],
-                        'resize_keyboard' => true,
+                        ]
                     ])
                 ]);
 
+                $personal->map = 'confirm';
+                $personal->save();
+
+                exit;
+
+            }
+
+            if($personal->is_active && $callback_data == 'confirm'){
+
+                $job = Job::where('personal_id', $personal->id)->where('status', 'passive')->first();
+                $job->status = 'active';
+                $job->save();
+
+                // Рахмет 😊, Сиздиң жумысыңыз  қабылланды, ҳәм 5466 санлы ID менен дизимге алынды. Танлаўымызда актив қатнасқаныңыз ушын рахмет, кейинги басқышқа өткенлигиңиз ҳақкында қосымша хабарландырамыз ✅
+                $text = "Рахмет 😊, Сиздиң жумысыңыз  қабылланды, ҳәм " . $job->id . " санлы ID менен дизимге алынды. Танлаўымызда актив қатнасқаныңыз ушын рахмет, кейинги басқышқа өткенлигиңиз ҳақкында қосымша хабарландырамыз ✅";
+
+                $telegram->sendMessage([
+                    'chat_id' => $chat_id,
+                    'text' => $text,
+                ]);
+
+                $old_text = $request->input('callback_query.message.text');
+                // "Танлаўда қатнасыў ушын тастыйықлаў кнопкасын басың" cut text last line
+                $old_text = substr($old_text, 0, strrpos($old_text, "\n"));
+
+                $telegram->editMessageText([
+                    'chat_id' => $chat_id,
+                    'message_id' => $request->input('callback_query.message.message_id'),
+                    'text' => $old_text,
+                    'reply_markup' => json_encode([
+                        'inline_keyboard' => []
+                    ])
+                ]);
+
+                $personal->map = 'main';
+                $personal->save();
+
+                exit;
+            }
+
+            if($personal->is_active && $text == "Анкета"){
+                $anketa = "";
+                $anketa .= "👤 Ф.А.Ә: " . $personal->fullname . "\n";
+                $anketa .= "📞 Телефон: " . $personal->phone . "\n";
+                $anketa .= "📍 Мәнзили: " . $personal->rayon . "\n";
+                $anketa .= "🏫 Мектеп: " . $personal->school . "\n";
+                $anketa .= "📚 Класс: " . $personal->class . "\n";
+
+                $telegram->sendMessage([
+                    'chat_id' => $chat_id,
+                    'text' => $anketa,
+                ]);
+
+                $personal->map = 'anketa';
+                $personal->save();
+
+                exit;
             }
 
 
 
-            $telegram->sendMessage([
-                'chat_id' => "1608513980",
-                'text' => json_encode($request->all(), JSON_PRETTY_PRINT)
-            ]);
+            // $telegram->sendMessage([
+            //     'chat_id' => "1608513980",
+            //     'text' => json_encode($request->all(), JSON_PRETTY_PRINT)
+            // ]);
         } catch (\Throwable $th) {
             //throw $th;
             $telegram->sendMessage([
