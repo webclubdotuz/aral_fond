@@ -496,7 +496,7 @@ class TelegramController extends Controller
                     $file_ext = explode('.', $file_ext);
                     $file_ext = end($file_ext);
 
-                    if($file_ext != 'pdf' && $file_ext != 'jpg' && $file_ext != 'jpeg' && $file_ext != 'png'){
+                    if($file_ext != 'pdf' && $file_ext != 'PDF' && $file_ext != 'jpg' && $file_ext != 'jpeg' && $file_ext != 'png'){
                         $telegram->sendMessage([
                             'chat_id' => $chat_id,
                             'text' => 'Файл форматы жарамсыз. PDF яки суўрет форматында ботқа жибериң',
