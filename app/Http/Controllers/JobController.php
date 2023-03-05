@@ -30,8 +30,8 @@ class JobController extends Controller
         }
 
         if ($job->ball_date != now()->format('Y-m-d')) {
-            toast('You are not allowed to do this action', 'error');
-            return redirect()->back()->with('error', 'You are not allowed to do this action');
+            toast("Лимит", 'error');
+            return redirect()->back();
         }
 
         $request->validate([
