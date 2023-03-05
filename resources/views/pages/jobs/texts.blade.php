@@ -18,7 +18,11 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <livewire:job-text-table />
+                @if (hasRole('admin'))
+                    <livewire:job-text-table />
+                @else
+                    <livewire:job-expert-table />
+                @endif
             </div>
         </div>
     </div>
