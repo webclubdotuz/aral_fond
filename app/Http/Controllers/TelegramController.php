@@ -138,7 +138,8 @@ class TelegramController extends Controller
             }
 
 
-            if ($text == '/start') {
+            if ($text == '/start' || $request->input('callback_query.data') == "anketa_back")
+            {
 
                 $start_text = "Ассалаўма алейкум хүрметли қатнасыўшы, Жаңа Арал балалар нәзеринде конкурсына хош келипсиз!.
                 \nТанлаў 2 басқышта өткериледи ✅
@@ -154,6 +155,15 @@ class TelegramController extends Controller
                         'inline_keyboard' => $check
                     ])
                 ]);
+
+
+                if($request->input('callback_query.data') == "anketa_back")
+                {
+                    $telegram->deleteMessage([
+                        'chat_id' => $chat_id,
+                        'message_id' => $request->input('callback_query.message.message_id')
+                    ]);
+                }
 
                 exit;
             }
@@ -614,6 +624,8 @@ class TelegramController extends Controller
                         'inline_keyboard' => []
                     ])
                 ]);
+
+                exit;
             }
 
             if($personal->is_active && $text == "Анкета"){

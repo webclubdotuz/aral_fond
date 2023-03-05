@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Job;
 use Illuminate\Http\Request;
 
 class JobController extends Controller
@@ -17,5 +18,31 @@ class JobController extends Controller
     public function photo()
     {
         return view('pages.jobs.photos');
+    }
+
+    public function ball(Request $request, Job $job)
+    {
+
+        $user = auth()->user();
+        if ($user->id != $job->user_id) {
+            toast('You are not allowed to do this action', 'error');
+            return redirect()->back()->with('error', 'You are not allowed to do this action');
+        }
+
+        if ($job->ball_date != now()->format('Y-m-d') || $job->ball_date == null) {
+            toast('You are not allowed to do this action', 'error');
+            return redirect()->back()->with('error', 'You are not allowed to do this action');
+        }
+
+        $request->validate([
+            'ball' => 'required|numeric|min:0|max:100',
+        ]);
+
+
+        $job->ball = $request->ball;
+        $job->ball_date = now();
+        $job->save();
+
+        return redirect()->back()->with('success', 'Ball added successfully');
     }
 }

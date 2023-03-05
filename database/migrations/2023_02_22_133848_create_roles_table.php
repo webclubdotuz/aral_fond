@@ -33,6 +33,16 @@ return new class extends Migration
                 'slug' => 'admin',
                 'description' => 'Admin',
             ],
+            [
+                'name' => 'Эксперт фото',
+                'slug' => 'expert-photo',
+                'description' => 'Эксперт фото',
+            ],
+            [
+                'name' => 'Эксперт текст',
+                'slug' => 'expert-text',
+                'description' => 'Эксперт текст',
+            ],
         ];
 
         foreach ($roles as $role) {

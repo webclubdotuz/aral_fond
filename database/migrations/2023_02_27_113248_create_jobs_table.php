@@ -15,11 +15,18 @@ return new class extends Migration
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('personal_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            // $table->string('personal_id');
+            $table->foreignId('personal_id')->constrained('personals')->nullable();
             $table->string('file_path')->nullable();
             $table->text('description')->nullable();
             $table->enum('status', ['passive', 'active', 'done'])->default('passive');
             $table->enum('type', ['text', 'photo']);
+
+            $table->double('ball')->nullable();
+            $table->date('ball_date')->nullable();
+
             $table->timestamps();
         });
     }

@@ -32,3 +32,14 @@ function my_date_format($date)
 
 }
 
+function hasRole($role)
+{
+
+    $user = auth()->user()->roles->contains('slug', $role);
+    // dd($user, $role);
+    if (is_string($role)) {
+        return auth()->user()->roles->contains('slug', $role);
+    }
+    return false;
+}
+

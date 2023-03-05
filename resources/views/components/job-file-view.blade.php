@@ -21,7 +21,7 @@
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="fullscreeexampleModalLabel">Full Screen Modal</h5>
+                    <h5 class="modal-title" id="fullscreeexampleModalLabel">№{{ $job->id }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -37,8 +37,24 @@
                     @endif
                 </div>
                 <div class="modal-footer">
-                    <a href="javascript:void(0);" class="btn btn-light" data-bs-dismiss="modal"><i class="mdi mdi-close-circle-outline me-1"></i></a>
-                    <button type="button" class="btn btn-primary"><i class="mdi mdi-content-save-outline me-1"></i></button>
+                    <div class="row">
+                        <div class="col-12">
+                            @if (hasRole('expert-photo') || hasRole('export-text'))
+                                <form action="{{ route('jobs.ball', $job->id) }}" method="post">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <div class="input-group mb-3">
+                                        <input type="number" name="ball" id="ball" class="form-control" placeholder="Балл" required min="0" max="100" step="any" value="{{ $job->ball }}">
+                                        @if($job->ball_date == now()->format('Y-m-d') || $job->ball_date == null)
+                                            <button type="submit" class="btn btn-primary"><i class="uil-check"></i></button>
+                                        @endif
+                                        {{-- <button type="submit" class="btn btn-primary"><i class="uil-check"></i></button> --}}
+                                    </div>
+                                </form>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

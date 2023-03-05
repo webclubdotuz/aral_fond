@@ -15,6 +15,8 @@ class Job extends Model
         'description',
         'status',
         'type',
+        'ball',
+        'ball_date',
     ];
 
     public function personal()
