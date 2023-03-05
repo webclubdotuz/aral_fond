@@ -429,6 +429,28 @@ class TelegramController extends Controller
 
             // 🗒Шығарма
             if($personal->is_active && $text == '🗒Шығарма'){
+
+                $old_jobs = Job::where('personal_id', $personal->id)->where('status', 'active')->where('type', 'text')->get();
+                if($old_jobs->count()){
+                    $telegram->sendMessage([
+                        'chat_id' => $chat_id,
+                        'text' => 'Ҳәр бир жөнелис бойынша тек ғана бир марте қатнасыў имканиятына ийесиз. Егер жибериўде қатеге жол қойған болсаңыз басқа телеграм адрес арқалы дизимнен өтип, қайта жиберсеңиз болады ✅',
+                        'reply_markup' => json_encode([
+                            'keyboard' => [
+                                [
+                                    [
+                                        'text' => '🔙 Бас меню'
+                                    ]
+                                ]
+                            ],
+                            'resize_keyboard' => true,
+                        ])
+                    ]);
+                    exit;
+                }
+
+
+
                 $personal->map = 'shigarma';
                 $personal->save();
 
@@ -462,6 +484,24 @@ class TelegramController extends Controller
 
             // 🌄Суўрет
             if($personal->is_active && $text == '🌄Суўрет'){
+                $old_jobs = Job::where('personal_id', $personal->id)->where('status', 'active')->where('type', 'photo')->get();
+                if($old_jobs->count()){
+                    $telegram->sendMessage([
+                        'chat_id' => $chat_id,
+                        'text' => 'Ҳәр бир жөнелис бойынша тек ғана бир марте қатнасыў имканиятына ийесиз. Егер жибериўде қатеге жол қойған болсаңыз басқа телеграм адрес арқалы дизимнен өтип, қайта жиберсеңиз болады ✅',
+                        'reply_markup' => json_encode([
+                            'keyboard' => [
+                                [
+                                    [
+                                        'text' => '🔙 Бас меню'
+                                    ]
+                                ]
+                            ],
+                            'resize_keyboard' => true,
+                        ])
+                    ]);
+                    exit;
+                }
                 $personal->map = 'photo';
                 $personal->save();
 
@@ -526,7 +566,7 @@ class TelegramController extends Controller
 
                 $file = "https://api.telegram.org/file/bot" . env('TELEGRAM_BOT_TOKEN') . "/" . $response->getFilePath();
                 $contents = file_get_contents($file);
-                $path_url = "jobs/" . $file_name;
+                $path_url = "jobs/" . time() . "_" . $file_name . "." . strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
                 $path_file = Storage::disk('public')->put($path_url, $contents);
 
 

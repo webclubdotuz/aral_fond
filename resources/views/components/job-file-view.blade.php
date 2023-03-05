@@ -4,7 +4,7 @@
     $file_extension = pathinfo($job->file_path, PATHINFO_EXTENSION);
     ?>
 
-    @if ($file_extension == 'pdf')
+    @if ($file_extension == 'pdf' || $file_extension == 'PDF')
         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
             data-bs-target="#fullscreeexampleModal{{ $job->id }}">
             <i class="uil-file-alt"></i>
