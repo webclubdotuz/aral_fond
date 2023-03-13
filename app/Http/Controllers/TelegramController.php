@@ -7,6 +7,7 @@ use App\Models\Personal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Telegram\Bot\Api;
+use Telegram\Bot\FileUpload\InputFile;
 use Termwind\Components\Dd;
 
 class TelegramController extends Controller
@@ -459,7 +460,7 @@ class TelegramController extends Controller
                 $photo_path = public_path('images/shigarma.jpg');
                 $telegram->sendPhoto([
                     'chat_id' => $chat_id,
-                    'photo' => $photo_path,
+                    'photo' => new InputFile($photo_path, 'shigarma.jpg'),
                 ]);
 
                 $telegram->sendMessage([
