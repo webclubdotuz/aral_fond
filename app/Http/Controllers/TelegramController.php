@@ -457,7 +457,7 @@ class TelegramController extends Controller
                 $personal->map = 'shigarma';
                 $personal->save();
 
-                $photo_path = public_path('images/shigarma.jpg');
+                $photo_path = public_path('shigarma.jpg');
                 $telegram->sendPhoto([
                     'chat_id' => $chat_id,
                     'photo' => new InputFile($photo_path, 'shigarma.jpg'),
