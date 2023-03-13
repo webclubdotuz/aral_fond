@@ -527,6 +527,12 @@ class TelegramController extends Controller
                 $personal->map = 'photo';
                 $personal->save();
 
+                $photo_path = public_path('photo.jpg');
+                $telegram->sendPhoto([
+                    'chat_id' => $chat_id,
+                    'photo' => new InputFile($photo_path, 'photo.jpg'),
+                ]);
+
                 $telegram->sendMessage([
                     'chat_id' => $chat_id,
                     'text' => 'Суўретиңизди PDF яки 1 дана суўрет форматында ботқа жибериң
