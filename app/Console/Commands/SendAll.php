@@ -37,14 +37,23 @@ class SendAll extends Command
         $time = time();
         $count = 0;
         $count2 = 0;
+        $error = 0;
         foreach ($personals as $personal) {
             echo $count2 . ") " . $personal->chat_id . PHP_EOL;
 
 
-            $telegram->sendMessage([
-                'chat_id' => $personal->chat_id,
-                'text' => "Assalawma aleykum húrmetli qatnasıwshı.  Búgin jumıslardı qabıllawdıń eń sonǵı múddeti.  1-Aprel saat 23:00 ge shekem SHÍǴARMA yaki SUWRET jumıslarıńızdi jiberseńiz boladı hám onnan keyin jumıslardı qabıllaw toxtatiladi❗️",
-            ]);
+            try {
+                //code...
+                $telegram->sendMessage([
+                    'chat_id' => $personal->chat_id,
+                    'text' => "Assalawma aleykum húrmetli qatnasıwshı.  Búgin jumıslardı qabıllawdıń eń sonǵı múddeti.  1-Aprel saat 23:00 ge shekem SHÍǴARMA yaki SUWRET jumıslarıńızdi jiberseńiz boladı hám onnan keyin jumıslardı qabıllaw toxtatiladi❗️",
+                ]);
+            } catch (\Throwable $th) {
+                //throw $th;
+                echo $th->getMessage() . PHP_EOL;
+                $error++;
+            }
+
 
 
             if($count == 35){
@@ -61,6 +70,7 @@ class SendAll extends Command
         $time = $time / 60;
 
         echo $time . PHP_EOL . PHP_EOL . PHP_EOL;
+        echo $error . PHP_EOL . PHP_EOL . PHP_EOL;
 
         return 0;
 
