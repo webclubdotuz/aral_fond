@@ -99,11 +99,21 @@ class TelegramController extends Controller
 
             $personal = Personal::where('chat_id', $chat_id)->first();
 
+
             // send action
             $telegram->sendChatAction([
                 'chat_id' => $chat_id,
                 'action' => 'typing'
             ]);
+
+            $text = "Jumıslardı qabıllaw toqtatıldi !";
+
+            $telegram->sendMessage([
+                'chat_id' => $chat_id,
+                'text' => $text,
+            ]);
+
+            exit;
 
             if (!$personal) {
                 $personal = Personal::create([
