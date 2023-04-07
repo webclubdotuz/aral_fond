@@ -38,15 +38,15 @@ class Foto extends Command
         {
             if($count <= 351)
             {
-                $job->user_id = 6;
+                $job->user_id = 4;
             }
             elseif($count > 351 && $count <= 702)
             {
-                $job->user_id = 7;
+                $job->user_id = 5;
             }
             elseif($count > 702)
             {
-                $job->user_id = 8;
+                $job->user_id = 6;
             }
             $job->save();
             $count++;
