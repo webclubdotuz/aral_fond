@@ -32,12 +32,20 @@ class JobTextTable extends DataTableComponent
     {
         return [
             Column::make("ID", "id")
-                ->sortable(),
-            Column::make("Катнасыушы", "personal.fullname"),
+                ->sortable()
+                ->searchable(),
+            Column::make("Катнасыушы", "personal.fullname")
+                ->sortable()
+                ->searchable(),
                 Column::make("Адрес", "personal.rayon")
-                ->sortable(),
-            Column::make("Мектеп", "personal.school"),
-            Column::make("Класс", "personal.class"),
+                ->sortable()
+                ->searchable(),
+            Column::make("Мектеп", "personal.school")
+                ->sortable()
+                ->searchable(),
+            Column::make("Класс", "personal.class")
+                ->sortable()
+                ->searchable(),
             Column::make("Файл", 'id')
                 ->format(function ($value, $column, $row) {
                     return view('components.job-file-view', ['job' => Job::find($value)]);
@@ -54,7 +62,8 @@ class JobTextTable extends DataTableComponent
                     return $value ? $value : '<i class="mdi mdi-timer-sand"></i>';
                 })
                 ->html()
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Уақыты", "created_at")
                 ->sortable(),
         ];

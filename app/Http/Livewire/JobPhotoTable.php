@@ -33,12 +33,18 @@ class JobPhotoTable extends DataTableComponent
     {
         return [
             Column::make("ID", "id")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Катнасыушы", "personal.fullname"),
                 Column::make("Адрес", "personal.rayon")
-                ->sortable(),
-            Column::make("Мектеп", "personal.school"),
-            Column::make("Класс", "personal.class"),
+                ->sortable()
+                ->searchable(),
+            Column::make("Мектеп", "personal.school")
+                ->sortable()
+                ->searchable(),
+            Column::make("Класс", "personal.class")
+                ->sortable()
+                ->searchable(),
             Column::make("Файл", 'id')
                 ->format(function ($value, $column, $row) {
                     return view('components.job-file-view', ['job' => Job::find($value)]);
@@ -49,13 +55,15 @@ class JobPhotoTable extends DataTableComponent
                     $user = User::find($job->user_id);
                     return $user ? $user->fullname : '<i class="mdi mdi-account-alert text-danger"></i>';
                 })
-                ->html(),
+                ->html()
+                ->sortable(),
             Column::make("Балл", 'ball')
                 ->format(function ($value, $column, $row) {
                     return $value ? $value : '<i class="mdi mdi-timer-sand"></i>';
                 })
                 ->html()
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Уақыты", "created_at")
                 ->sortable(),
         ];

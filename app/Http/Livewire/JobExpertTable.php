@@ -25,15 +25,18 @@ class JobExpertTable extends DataTableComponent
     {
         return [
             Column::make("ID", "id")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Файл", 'id')
                 ->format(function ($value, $column, $row) {
                     return view('components.job-file-view', ['job' => Job::find($value)]);
                 }),
             Column::make("Балл", 'ball')
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Уақыты", "created_at")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
         ];
     }
 }
