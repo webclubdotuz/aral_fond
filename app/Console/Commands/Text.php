@@ -3,18 +3,16 @@
 namespace App\Console\Commands;
 
 use App\Models\Job;
-use App\Models\User;
 use Illuminate\Console\Command;
-use Termwind\Components\Dd;
 
-class Foto extends Command
+class Text extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:photo';
+    protected $signature = 'command:text';
 
     /**
      * The console command description.
@@ -30,25 +28,24 @@ class Foto extends Command
      */
     public function handle()
     {
+        $jobs = Job::where('type', 'text')->get();
 
-        $jobs = Job::where('type', 'photo')->get();
-
-        // 4,5,6
+        // 7, 8, 9
 
         $count = 1;
         foreach($jobs as $job)
         {
             if($count <= 351)
             {
-                $job->user_id = 4;
+                $job->user_id = 7;
             }
             elseif($count <= 702)
             {
-                $job->user_id = 5;
+                $job->user_id = 8;
             }
             elseif($count <= 703)
             {
-                $job->user_id = 6;
+                $job->user_id = 9;
             }
             $job->save();
             $count++;
