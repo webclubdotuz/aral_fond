@@ -33,22 +33,20 @@ class Foto extends Command
 
         $jobs = Job::where('type', 'photo')->get();
 
-        // 4,5,6
-
         $count = 1;
         foreach($jobs as $job)
         {
             if($count <= 351)
             {
-                $job->user_id = 4;
-            }
-            elseif($count <= 702)
-            {
-                $job->user_id = 5;
-            }
-            elseif($count <= 703)
-            {
                 $job->user_id = 6;
+            }
+            elseif($count > 351 && $count <= 702)
+            {
+                $job->user_id = 7;
+            }
+            elseif($count > 702)
+            {
+                $job->user_id = 8;
             }
             $job->save();
             $count++;

@@ -30,20 +30,20 @@ class Text extends Command
     {
         $jobs = Job::where('type', 'text')->get();
 
-        // 7, 8, 9
+        // 4, 5, 6
 
         $count = 1;
         foreach($jobs as $job)
         {
-            if($count <= 351)
+            if($count <= 250)
             {
                 $job->user_id = 7;
             }
-            elseif($count <= 702)
+            elseif($count <= 500 && $count > 250)
             {
                 $job->user_id = 8;
             }
-            elseif($count <= 703)
+            elseif($count > 500)
             {
                 $job->user_id = 9;
             }
