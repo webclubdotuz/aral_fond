@@ -28,22 +28,21 @@ class Text extends Command
      */
     public function handle()
     {
-        $jobs = Job::where('type', 'text')->get();
-
+        $jobs = Job::where('type', 'text')->where('status', 'active')->get();
         // 4, 5, 6
 
         $count = 1;
         foreach($jobs as $job)
         {
-            if($count <= 250)
+            if($count <= 167)
             {
                 $job->user_id = 7;
             }
-            elseif($count <= 500 && $count > 250)
+            elseif($count <= 334)
             {
                 $job->user_id = 8;
             }
-            elseif($count > 500)
+            elseif($count > 334)
             {
                 $job->user_id = 9;
             }

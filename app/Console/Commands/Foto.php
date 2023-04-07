@@ -31,20 +31,20 @@ class Foto extends Command
     public function handle()
     {
 
-        $jobs = Job::where('type', 'photo')->get();
+        $jobs = Job::where('type', 'photo')->where('status', 'active')->get();
 
         $count = 1;
         foreach($jobs as $job)
         {
-            if($count <= 351)
+            if($count <= 272)
             {
                 $job->user_id = 4;
             }
-            elseif($count > 351 && $count <= 702)
+            elseif($count > 272 && $count <= 544)
             {
                 $job->user_id = 5;
             }
-            elseif($count > 702)
+            elseif($count > 544)
             {
                 $job->user_id = 6;
             }
