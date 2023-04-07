@@ -19,23 +19,30 @@ class JobTable extends DataTableComponent
     {
         return [
             Column::make("Id", "id")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Personal id", "personal_id")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("File", 'id')
                 ->format(function ($value, $column, $row) {
                     return view('components.job-file-view', ['job' => Job::find($value)]);
                 }),
             Column::make("Description", "description")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Status", "status")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Type", "type")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Created at", "created_at")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
             Column::make("Updated at", "updated_at")
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
         ];
     }
 }
