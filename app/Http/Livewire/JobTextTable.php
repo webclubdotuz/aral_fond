@@ -25,7 +25,7 @@ class JobTextTable extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Job::query()->where('type', 'text')->where('status', 'active')->orderBy('id', 'desc');
+        return Job::query()->where('type', 'text')->where('status', 'active');
     }
 
     public function columns(): array
