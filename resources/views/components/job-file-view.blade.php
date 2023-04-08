@@ -39,7 +39,7 @@
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-12">
-                            @if (hasRole('expert-photo') || hasRole('export-text'))
+                            @if (hasRole('expert-photo') || hasRole('expert-text'))
                                 <form action="{{ route('jobs.ball', $job->id) }}" method="post">
                                     @csrf
                                     @method('PUT')
