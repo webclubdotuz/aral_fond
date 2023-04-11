@@ -51,10 +51,6 @@ class JobPhotoTable extends DataTableComponent
                 })
                 ->html(),
             Column::make("Балл", 'ball')
-                ->format(function ($value, $column, $row) {
-                    return $value ? $value : '<i class="mdi mdi-timer-sand"></i>';
-                })
-                ->html()
                 ->sortable(),
             Column::make("Уақыты", "created_at")
                 ->sortable(),
