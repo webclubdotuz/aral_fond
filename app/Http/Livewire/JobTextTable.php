@@ -43,6 +43,8 @@ class JobTextTable extends DataTableComponent
                 ->sortable(),
             Column::make("Мектеп", "personal.school"),
             Column::make("Класс", "personal.class"),
+            Column::make("Д.рождения", "personal.birthday")
+                ->sortable(),
             Column::make("Файл", 'id')
                 ->format(function ($value, $column, $row) {
                     return view('components.job-file-view', ['job' => Job::find($value)]);
