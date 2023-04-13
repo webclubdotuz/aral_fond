@@ -34,7 +34,12 @@ class JobPhotoTable extends DataTableComponent
         return [
             Column::make("ID", "id")
                 ->sortable(),
-            Column::make("Катнасыушы", "personal.fullname"),
+            Column::make("Катнасыушы", "personal.fullname")
+                ->sortable()
+                ->searchable(),
+            Column::make("Телефон", "personal.phone")
+                ->sortable()
+                ->searchable(),
                 Column::make("Адрес", "personal.rayon")
                 ->sortable(),
             Column::make("Мектеп", "personal.school"),
